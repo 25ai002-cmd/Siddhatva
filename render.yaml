@@ -1,6 +1,7 @@
 services:
-  - type: static
+  - type: web
     name: siddhatva-builders
+    runtime: static
     buildCommand: "" # Pure static HTML site, no build command needed
     staticPublishPath: "." # Publish the root directory
     routes:
