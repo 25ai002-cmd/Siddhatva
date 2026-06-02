@@ -1629,3 +1629,16 @@ textarea.form-control {
         gap: 2.5rem;
     }
 }
+
+/* Specificity overrides for text overlay visibility on Dark Backgrounds */
+.slide-content h1,
+.slide-content h2,
+.cta-title,
+.page-title {
+    color: var(--color-white) !important;
+}
+
+.slide-desc,
+.cta-desc {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
