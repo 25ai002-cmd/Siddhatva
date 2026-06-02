@@ -127,6 +127,37 @@ document.addEventListener('DOMContentLoaded', () => {
             slideInterval = setInterval(nextSlide, intervalTime);
         }
 
+        // Swipe Gestures for Mobile Touch Devices
+        const sliderContainer = document.querySelector('.hero-slider-container');
+        if (sliderContainer) {
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const minSwipeDistance = 50; // Minimum swipe distance in pixels
+
+            sliderContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].clientX;
+            }, { passive: true });
+
+            sliderContainer.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].clientX;
+                handleSwipe();
+            }, { passive: true });
+
+            function handleSwipe() {
+                const swipeDistance = touchEndX - touchStartX;
+                if (Math.abs(swipeDistance) > minSwipeDistance) {
+                    if (swipeDistance > 0) {
+                        // Swipe right -> Previous slide
+                        prevSlide();
+                    } else {
+                        // Swipe left -> Next slide
+                        nextSlide();
+                    }
+                    resetInterval();
+                }
+            }
+        }
+
         function resetInterval() {
             clearInterval(slideInterval);
             startInterval();

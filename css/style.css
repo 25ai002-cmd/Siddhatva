@@ -339,7 +339,7 @@ img {
 }
 
 .slide-title {
-    font-size: 4rem;
+    font-size: clamp(2rem, 5.5vw, 4rem);
     font-weight: 700;
     line-height: 1.15;
     margin-bottom: 1.5rem;
@@ -552,7 +552,7 @@ img {
 }
 
 .section-title {
-    font-size: 2.75rem;
+    font-size: clamp(1.75rem, 4.5vw, 2.75rem);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: -0.5px;
@@ -684,7 +684,8 @@ img {
 
 .project-features {
     display: flex;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
     border-top: 1px solid var(--color-border);
     padding-top: 1.25rem;
 }
@@ -823,7 +824,7 @@ img {
 }
 
 .page-title {
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 1rem;
@@ -1498,26 +1499,59 @@ textarea.form-control {
 }
 
 /* Responsiveness adjustments */
+
+/* Laptop L & Ultra-wide (min-width: 1440px) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1360px;
+    }
+}
+
+/* Standard Laptops & Desktops (max-width: 1200px) */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+/* Small Laptops & Large Tablets (max-width: 1024px) */
 @media (max-width: 1024px) {
     .container {
+        max-width: 960px;
         padding: 0 1.5rem;
     }
-    .slide-title {
-        font-size: 3rem;
+    
+    /* Mobile / Tablet Parallax Scroll Performance Fix */
+    .cta-banner {
+        background-attachment: scroll !important;
+        padding: 6rem 0;
     }
+    
+    /* Highlights Grid (2 Columns) */
     .highlights-grid {
         grid-template-columns: repeat(2, 1fr);
+        border-radius: 8px;
     }
     .highlight-card {
-        border-right: none;
+        border-right: 1px solid var(--color-border);
         border-bottom: 1px solid var(--color-border);
     }
     .highlight-card:nth-child(even) {
         border-right: none;
     }
+    .highlight-card:nth-child(3),
+    .highlight-card:nth-child(4) {
+        border-bottom: none;
+    }
+    
     .projects-grid {
         grid-template-columns: 1fr;
+        gap: 2.5rem;
     }
+    .project-image-wrapper {
+        height: 320px;
+    }
+    
     .credentials-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1530,7 +1564,7 @@ textarea.form-control {
         right: 0;
     }
     .values-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
     .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1545,6 +1579,7 @@ textarea.form-control {
     }
 }
 
+/* Tablets & Netbooks (max-width: 768px) */
 @media (max-width: 768px) {
     .section-padding {
         padding: 4.5rem 0;
@@ -1555,16 +1590,21 @@ textarea.form-control {
     .header-container {
         height: 65px;
     }
+    
+    /* Scrollable and cleaner Navigation drawer */
     .nav-menu {
         position: fixed;
         top: 65px;
         left: -100%;
         width: 100%;
         height: calc(100vh - 65px);
+        max-height: calc(100vh - 65px);
+        overflow-y: auto;
         background-color: var(--color-white);
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
+        padding: 4rem 2rem;
         gap: 2rem;
         transition: var(--transition-normal);
         box-shadow: var(--shadow-lg);
@@ -1585,17 +1625,57 @@ textarea.form-control {
     .mobile-nav-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(6px, -6px);
     }
-    .slide-title {
-        font-size: 2.25rem;
+    
+    .highlights-section {
+        margin-top: 1.5rem;
     }
-    .slide-desc {
-        font-size: 1rem;
-        margin-bottom: 2rem;
+    .highlights-grid {
+        /* Keep it 2 columns on tablet for better visual balance */
+        grid-template-columns: repeat(2, 1fr);
     }
-    .btn {
-        padding: 0.8rem 1.75rem;
-        font-size: 0.85rem;
+    .highlight-card {
+        padding: 2.25rem 1.5rem;
     }
+    .highlight-card:nth-child(even) {
+        border-right: none;
+    }
+    .highlight-card:nth-child(3),
+    .highlight-card:nth-child(4) {
+        border-bottom: none;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    .project-image-wrapper {
+        height: 285px;
+    }
+    
+    /* Keep grids 2-columns on tablet for a cleaner layout */
+    .credentials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .contact-form-box {
+        padding: 2.5rem;
+    }
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+    
     .slider-arrow {
         width: 45px;
         height: 45px;
@@ -1606,27 +1686,143 @@ textarea.form-control {
     .slider-arrow-right {
         right: 15px;
     }
+    
+    /* Scale CTA banner padding & text sizes */
+    .cta-banner {
+        padding: 5rem 0 !important;
+    }
+    .cta-title {
+        font-size: clamp(1.75rem, 6vw, 2.5rem) !important;
+    }
+}
+
+/* Mobile Large (max-width: 576px) */
+@media (max-width: 576px) {
+    .container {
+        padding: 0 1.25rem;
+    }
+    
+    /* Collapse to 1 column below 576px */
     .highlights-grid {
         grid-template-columns: 1fr;
     }
+    .highlight-card {
+        border-right: none !important;
+        border-bottom: 1px solid var(--color-border) !important;
+    }
+    .highlight-card:last-child {
+        border-bottom: none !important;
+    }
+    
     .credentials-grid {
         grid-template-columns: 1fr;
     }
     .gallery-grid {
         grid-template-columns: 1fr;
     }
-    .contact-form-box {
-        padding: 2rem;
-    }
-    .form-grid {
+    .values-grid {
         grid-template-columns: 1fr;
-    }
-    .form-group.full-width {
-        grid-column: span 1;
     }
     .footer-grid {
         grid-template-columns: 1fr;
         gap: 2.5rem;
+    }
+    
+    .about-experience-badge {
+        padding: 1.5rem;
+        right: 15px;
+        bottom: 15px;
+    }
+    .about-experience-num {
+        font-size: 2.5rem;
+    }
+}
+
+/* Mobile Small (max-width: 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+    .section-padding {
+        padding: 3.5rem 0;
+    }
+    .slide-content {
+        padding-top: 2rem;
+    }
+    .slide-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 100%;
+    }
+    .btn {
+        width: 100%;
+        margin-left: 0 !important;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.8rem;
+    }
+    .slider-indicators {
+        bottom: 25px;
+        gap: 10px;
+    }
+    .indicator {
+        width: 10px;
+        height: 10px;
+    }
+    
+    /* Hide slider arrows on small mobile devices (since touch swipes are enabled) */
+    .slider-arrow {
+        display: none !important;
+    }
+    
+    .about-experience-badge {
+        padding: 1.25rem;
+        right: 15px;
+        bottom: 15px;
+    }
+    .about-experience-num {
+        font-size: 2.25rem;
+    }
+    .about-features-list {
+        grid-template-columns: 1fr;
+    }
+    .logo-text .brand-title {
+        font-size: 1.15rem;
+    }
+    .logo-text .brand-subtitle {
+        font-size: 0.65rem;
+        letter-spacing: 1px;
+    }
+    .site-header.scrolled .header-container {
+        height: 60px;
+    }
+    
+    /* Scale down project card padding & heights on small screen */
+    .project-image-wrapper {
+        height: 200px;
+    }
+    .project-info {
+        padding: 1.25rem !important;
+    }
+    .project-features {
+        gap: 0.75rem 1.25rem !important;
+    }
+    
+    /* CTA Banner Small Mobile */
+    .cta-banner {
+        padding: 4rem 0 !important;
+    }
+    
+    /* Form Padding Small Mobile */
+    .contact-form-box {
+        padding: 1.5rem;
+    }
+    .form-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .office-card {
+        padding: 1.5rem;
     }
 }
 
