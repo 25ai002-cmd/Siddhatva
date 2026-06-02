@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: siddhatva-builders
+    env: static
+    buildCommand: "" # Pure static HTML site, no build command needed
+    publishDir: "." # Publish the root directory
+    routes:
+      - type: redirect
+        source: /
+        destination: /index.html
